@@ -866,7 +866,14 @@ class GRPOTrainer(Trainer):
         # Log the metrics
         mode = "eval" if self.control.should_evaluate else "train"
 
-        completion_length = self.accelerator.gather_for_metrics(completion_mask.sum(1)).float().mean().item()
+        # Initialize metrics if not already done
+        if mode not in self._metrics:
+            self._metrics[mode] = defaultdict(list)
+
+        # Calculate completion length safely
+        completion_length = self.accelerator.gather_for_metrics(completion_mask.sum(1)).float().mean()
+        if isinstance(completion_length, torch.Tensor):
+            completion_length = completion_length.item()
         self._metrics[mode]["completion_length"].append(completion_length)
 
         reward_per_func = rewards_per_func.mean(0)
