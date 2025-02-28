@@ -872,7 +872,7 @@ class GRPOTrainer(Trainer):
 
         # Calculate completion length safely
         completion_length = self.accelerator.gather_for_metrics(completion_mask.sum(1)).float().mean()
-        if isinstance(completion_length, torch.Tensor):
+        if torch.is_tensor(completion_length):
             completion_length = completion_length.item()
         self._metrics[mode]["completion_length"].append(completion_length)
 
