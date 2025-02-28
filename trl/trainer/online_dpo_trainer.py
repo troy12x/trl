@@ -260,6 +260,8 @@ class OnlineDPOTrainer(Trainer):
                 temperature=args.temperature,
                 top_k=50,
                 top_p=1.0,
+                stop=["<|end_of_solution|>"],  # Add stopping condition here
+
                 detokenize=False,  # to avoid vllm to decode (we don't need it)
             )
             # vLLM dynamically adjusts the size of the key-value cache based on available GPU memory at instantiation.

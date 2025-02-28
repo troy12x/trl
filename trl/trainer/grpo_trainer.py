@@ -517,13 +517,15 @@ class GRPOTrainer(Trainer):
                 else:
                     guided_decoding = None
 
-                # Sampling parameters
-                self.sampling_params = SamplingParams(
-                    temperature=args.temperature,
-                    max_tokens=self.max_completion_length,
-                    guided_decoding=guided_decoding,
-                    n=args.num_generations,
-                )
+                            # Sampling parameters
+            self.sampling_params = SamplingParams(
+                temperature=args.temperature,
+                max_tokens=self.max_completion_length,
+                guided_decoding=guided_decoding,
+                n=args.num_generations,
+                stop=["<|end_of_solution|>"]  # Add stopping condition here
+            )
+
 
             self._last_loaded_step = 0  # tag to avoid useless loading during grad accumulation
 
