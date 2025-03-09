@@ -259,6 +259,8 @@ class OnlineDPOTrainer(Trainer):
                 max_tokens=args.max_new_tokens,
                 temperature=args.temperature,
                 top_k=50,
+                stop=["<|end_of_solution|>"],  # Add stopping condition here
+
                 top_p=1.0,
                 detokenize=False,  # to avoid vllm to decode (we don't need it)
             )

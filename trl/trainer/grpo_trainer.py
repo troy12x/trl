@@ -544,6 +544,7 @@ class GRPOTrainer(Trainer):
                 top_p=args.top_p,
                 top_k=args.top_k,
                 min_p=args.min_p,
+                stop=["<|end_of_solution|>"],  # Add stopping condition here
                 repetition_penalty=args.repetition_penalty,
             )
 
